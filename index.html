@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>Conversor de Coordenadas - CIVA</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #555;
+            word-wrap: break-word;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Coordenadas - CIVA</h1>
+        <input type="text" id="inputCoord" placeholder="Digite as coordenadas">
+        <button onclick="convertCoord()">Converter</button>
+        <div class="output" id="outputCoord"></div>
+    </div>
+
+    <script>
+        function convertCoord() {
+            const input = document.getElementById('inputCoord').value.trim();
+            const outputDiv = document.getElementById('outputCoord');
+
+            // Expressão regular mais flexível para capturar as coordenadas
+            const regex = /([NSWE])\s*[:°]?\s*(\d{1,3})\s*[:°]?\s*(\d{1,2})\s*[:'’]?\s*(\d{1,2}(\.\d+)?)?/gi;
+            const matches = [...input.matchAll(regex)];
+
+            if (matches.length < 2) {
+                outputDiv.innerHTML = "<span style='color:red;'>Por favor, insira duas coordenadas válidas.</span>";
+                return;
+            }
+
+            let resultados = [];
+
+            matches.forEach(match => {
+                let direcao = match[1].toUpperCase();
+                let graus = parseInt(match[2]);
+                let minutos = parseInt(match[3]);
+                let segundos = match[4] ? parseFloat(match[4]) : 0;
+
+                // Converte para minutos decimais
+                let minutos_decimal = minutos + (segundos / 60);
+                minutos_decimal = minutos_decimal.toFixed(1);
+
+                // Formata a saída com zero à esquerda
+                let grausFormatados = (direcao === 'W' || direcao === 'E') 
+                    ? graus.toString().padStart(3, '0') 
+                    : graus.toString().padStart(2, '0');
+
+                let coordFormatada = `${direcao} ${grausFormatados}° ${minutos_decimal}'`;
+                resultados.push(coordFormatada);
+            });
+
+            // Exibe o resultado final
+            const resultadoFinal = `${resultados[0]} ${resultados[1]}`;
+            outputDiv.innerHTML = `<strong>Coordenada Convertida:</strong> ${resultadoFinal}`;
+        }
+    </script>
+</body>
+</html>
