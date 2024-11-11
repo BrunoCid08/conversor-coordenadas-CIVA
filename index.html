@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-     <title>Conversor de Coordenadas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Conversor de Coordenadas</title>
 
     <!-- Link para o Manifesto do PWA -->
     <link rel="manifest" href="/manifest.json">
@@ -16,6 +16,7 @@
             .catch((error) => console.log('Falha ao registrar Service Worker:', error));
         }
     </script>
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -81,7 +82,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Conversor de Coordenadas - CIVA</h1>
+        <h1>Conversor de Coordenadas</h1>
         <input type="text" id="inputCoord" placeholder="Digite as coordenadas">
         <button onclick="convertCoord()">Converter</button>
         <div class="output" id="outputCoord"></div>
